@@ -1,7 +1,7 @@
 import pandas as pd
 
-stitch = pd.read_csv("total_az_mapped_to_stitch.data", sep="\t", usecols=["CIDs","ENSP-ID", "Scores"])
-ensp_2_uniprot = pd.read_csv("ensp_to_uniprot.tab", sep="\t")
+stitch = pd.read_csv("../total_az_mapped_to_stitch.data", sep="\t", usecols=["CIDs","ENSP-ID", "Scores"])
+ensp_2_uniprot = pd.read_csv("../ensp_to_uniprot.tab", sep="\t")
 sub_ensp_2_uniport = ensp_2_uniprot[["ENSP-ID", "Entry"]]
 #print(sub_ensp_2_uniport[sub_ensp_2_uniport["ENSP-ID"] == "ENSP00000464036"]["Entry"])
 def ensp_to_uniport():

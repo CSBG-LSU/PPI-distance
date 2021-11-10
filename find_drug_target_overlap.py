@@ -30,7 +30,7 @@ for cid in cids:
 
 #Step3: Load the graph
 print("reading graph...")
-Graph = nx.read_gexf("subgraph.gexf")
+Graph = nx.read_gexf("../subgraph.gexf")
 
 #Step4 : Convert all the uniprots to label
 print("converting to lables....")
