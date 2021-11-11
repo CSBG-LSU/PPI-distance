@@ -93,17 +93,19 @@ if __name__=="__main__":
 
 	#Step4 : Convert all the uniprots to label
 	print("converting to lables....")
-	nodes, edges, drugs = convert_uniprot_to_label(Graph,drug_prots)
+	_, edges, drugs = convert_uniprot_to_label(Graph,drug_prots)
 	# nodes = {"abc": "1234"}
 	# edges = {"1234, 4565":0.178}
 
 	print('saving results...')
 	# save the graph as binary file
 	graph = edge_to_graph(edges)
-	pickle.dump(graph, "../ppi.pickle")
+	with open("../ppi.pickle", "wb") as f:
+		pickle.dump(graph, f)
 
 	# save the drugs as binary file
-	pickle.dump(drugs, "../drugs.pickle")
+	with open("../drugs.pickle", "wb") as f:
+		pickle.dump(drugs, f)
 	
 
 	"""
