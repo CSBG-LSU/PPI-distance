@@ -2,8 +2,10 @@
 Find all targets for each drug in drug protein associatin dataset
 for each drug find the first order neighbours for proteins interacting with that drug
 Note: even though a single drug targets 2 different proteins, the protein neighbor clusters for these proteins might be different.
+
+This script converts all the uniprot names to their respective grapg label numbers
 """
-# This script converts all the uniprot names to their respective grapg label numbers
+
 import pandas as pd
 import networkx as nx
 from collections import defaultdict
@@ -100,6 +102,9 @@ if __name__=="__main__":
 	# save the graph as binary file
 	graph = edge_to_graph(edges)
 	pickle.dump(graph, "../ppi.pickle")
+
+	# save the drugs as binary file
+	pickle.dump(drugs, "../drugs.pickle")
 	
 
 	"""

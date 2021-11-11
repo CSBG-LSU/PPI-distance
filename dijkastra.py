@@ -6,3 +6,5 @@ class PPINetwork:
         self.drugs = pickle.load(drug_path)
 
     
+
+    
