@@ -9,7 +9,8 @@ Note: even though a single drug targets 2 different proteins, the protein neighb
 #!/usr/bin/python python3
 import pandas as pd
 import networkx as nx
-from tqdm import tqdm
+from collections import defaultdict
+import pickle
 
 
 def ensp_to_uniport():
@@ -62,6 +63,16 @@ def convert_uniprot_to_label(Graph, drug_prots):
 	
 	return nodes, edges, drugs
 
+
+def edge_to_graph(edges):
+	graph = defaultdict(list)
+	for edge in edges.keys():
+		node1, node2 = edge.split(",")[0], edge.split(",")[1]
+		weight = edges[edge]
+		graph[node1].append((weight, node2))
+		graph[node2].append((weight, node1))
+	return graph
+
 if __name__=="__main__":
 	# Step1 : convert ENSP-IDs to UniProt-IDs
 	final_df = ensp_to_uniport()
@@ -76,14 +87,22 @@ if __name__=="__main__":
 	print("reading graph...")
 	Graph = nx.read_gexf("../subgraph.gexf")
 
-	#Step4 : Convert all the uniprots to label
-	print("converting to lables....")
-	nodes, edges, drugs = convert_uniprot_to_label(Graph,drug_prots)
-
 	print("computing new weights....")
 	for source, target, attributes in Graph.edges(data=True):
 		attributes["Score"] = round((1.01-attributes["Score"]), 5)
 
+	#Step4 : Convert all the uniprots to label
+	print("converting to lables....")
+	nodes, edges, drugs = convert_uniprot_to_label(Graph,drug_prots)
+	# nodes = {"abc": "1234"}
+	# edges = {"1234, 4565":0.178}
+
+	# save the graph as binary file
+	graph = edge_to_graph(edges)
+	pickle.dump(graph, "../ppi.pickle")
+	
+
+	"""
 	print("running Dijkstra...")
 	for i, _ in tqdm(enumerate(list(drugs.keys()))):
 		for j, _ in enumerate(list(drugs.keys())):
@@ -101,3 +120,4 @@ if __name__=="__main__":
 					break
 			except:
 				break
+	"""
