@@ -3,11 +3,11 @@ import heapq
 from collections import defaultdict
 from os.path import exists, join
 from os import makedirs
-from tqdm import tqdm
+from multiprocessing import Pool
 
 
 class PPINetwork:
-    def __init__(self, ppi_path, drug_path, output_dir):
+    def __init__(self, ppi_path, drug_path, output_dir, num_process=28):
         with open(ppi_path, "rb") as f:
             self.ppi = pickle.load(f)
         with open(drug_path, "rb") as f:
@@ -16,7 +16,12 @@ class PPINetwork:
         if not exists(output_dir):
             makedirs(output_dir)
         self.output_dir = output_dir
+        self.num_process = num_process
         print("total number of drugs: ", len(self.drug_list))
+
+    def compute_distances_multi_drug_parallel(self):
+        with Pool(self.num_process) as p:
+            p.map(self.compute_distances_single_drug, self.drug_list)
 
     def compute_distances_single_drug(self, src_drug):
         """
@@ -28,7 +33,7 @@ class PPINetwork:
         targets = [x for x in targets if x.isdigit()]
 
         shortest_distances = {}
-        for target in tqdm(targets):
+        for target in targets:
             # run dijkstra to find the shortest distances of all nodes to target
             min_dist = self.dijkstra(self.ppi, target)
             for dst_drug in self.drug_list:
@@ -40,11 +45,10 @@ class PPINetwork:
                 for dst_target in dst_targets:
                     if dst_target in visited:
                         continue
+                    visited.add(dst_target)
                     for _, neighbor in self.ppi[dst_target]:
                         path = src_drug + '-' + target + '-' + dst_drug + '-' + dst_target + '-' + neighbor
                         shortest_distances[path] = min_dist[neighbor]
-                        visited.add(dst_target)
-                        #print(path, min_dist[neighbor])
 
         # save the results of src_drug
         out_file_path = join(self.output_dir, f"{src_drug}.pickle")
@@ -87,4 +91,5 @@ class PPINetwork:
 
 if __name__=="__main__":
     ppi = PPINetwork(ppi_path="../ppi.pickle", drug_path="../drugs.pickle", output_dir="../output")
-    ppi.compute_distances_single_drug(ppi.drug_list[0])
+    #ppi.compute_distances_single_drug(ppi.drug_list[0])
+    ppi.compute_distances_multi_drug_parallel()
