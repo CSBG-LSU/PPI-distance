@@ -21,17 +21,16 @@ def ensp_to_uniport(
 	sub_ensp_2_uniport = ensp_2_uniprot[["ENSP-ID", "Entry"]]
 	ensp_uniport = dict()
 	for entry in list(sub_ensp_2_uniport["ENSP-ID"].unique()):
-	    try:
-	        ensp_uniport[entry.split(",")[0]] = sub_ensp_2_uniport[sub_ensp_2_uniport["ENSP-ID"] == entry]["Entry"].values[0]
-	    except:
-	        print("Error!", entry)
+		try:
+			ensp_uniport[entry.split(",")[0]] = sub_ensp_2_uniport[sub_ensp_2_uniport["ENSP-ID"] == entry]["Entry"].values[0]
+		except:
+			print("Error!", entry)
 
 	final_df = pd.DataFrame(columns=["CIDs","ENSP-ID","Scores"])
 	for k, v in ensp_uniport.items():
-	    df = stitch[stitch["ENSP-ID"] == k]
-	    df = df.replace(df["ENSP-ID"].values, v)
-	    final_df = pd.concat([final_df, df], ignore_index=True)
-
+		df = stitch[stitch["ENSP-ID"] == k]
+		df = df.replace(df["ENSP-ID"].values, v)
+		final_df = pd.concat([final_df, df], ignore_index=True)	
 	return final_df
 
 def convert_uniprot_to_label(Graph, drug_prots):
