@@ -67,9 +67,7 @@ def convert_uniprot_to_label(Graph, drug_prots):
 def edge_to_graph(edges):
 	graph = defaultdict(list)
 	for edge in list(edges.keys())[0:5]:
-		print(edge)
-		continue
-		node1, node2 = edge.split(",")[0], edge.split(",")[1]
+		node1, node2 = edge[0], edge[1]
 		weight = edges[edge]
 		graph[node1].append((weight, node2))
 		graph[node2].append((weight, node1))
@@ -99,6 +97,7 @@ if __name__=="__main__":
 	# nodes = {"abc": "1234"}
 	# edges = {"1234, 4565":0.178}
 
+	print('saving results...')
 	# save the graph as binary file
 	graph = edge_to_graph(edges)
 	pickle.dump(graph, "../ppi.pickle")
