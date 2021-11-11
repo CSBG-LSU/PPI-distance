@@ -2,7 +2,6 @@
 Find all targets for each drug in drug protein associatin dataset
 for each drug find the first order neighbours for proteins interacting with that drug
 Note: even though a single drug targets 2 different proteins, the protein neighbor clusters for these proteins might be different.
-
 This script converts all the uniprot names to their respective grapg label numbers
 """
 
