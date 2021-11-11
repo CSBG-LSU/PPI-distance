@@ -66,7 +66,8 @@ def convert_uniprot_to_label(Graph, drug_prots):
 
 def edge_to_graph(edges):
 	graph = defaultdict(list)
-	for edge in edges.keys():
+	for edge in edges.keys()[0:5]:
+		print(edge)
 		node1, node2 = edge.split(",")[0], edge.split(",")[1]
 		weight = edges[edge]
 		graph[node1].append((weight, node2))
