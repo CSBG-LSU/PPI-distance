@@ -10,9 +10,12 @@ from collections import defaultdict
 import pickle
 
 
-def ensp_to_uniport():
-	stitch = pd.read_csv("../total_az_mapped_to_stitch.data", sep="\t", usecols=["CIDs","ENSP-ID", "Scores"])
-	ensp_2_uniprot = pd.read_csv("../ensp_to_uniprot.tab", sep="\t")
+def ensp_to_uniport(
+	stitch_file="../total_az_mapped_to_stitch.data",
+	ensp_to_uniport_file="../ensp_to_uniprot.tab"
+):
+	stitch = pd.read_csv(stitch_file, sep="\t", usecols=["CIDs","ENSP-ID", "Scores"])
+	ensp_2_uniprot = pd.read_csv(ensp_to_uniport_file, sep="\t")
 	sub_ensp_2_uniport = ensp_2_uniprot[["ENSP-ID", "Entry"]]
 	ensp_uniport = dict()
 	for entry in list(sub_ensp_2_uniport["ENSP-ID"].unique()):
