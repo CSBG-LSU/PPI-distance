@@ -7,7 +7,7 @@ from multiprocessing import Pool
 
 
 class PPINetwork:
-    def __init__(self, ppi_path, drug_path, output_dir, num_process=28):
+    def __init__(self, ppi_path, drug_path, output_dir, num_process):
         with open(ppi_path, "rb") as f:
             self.ppi = pickle.load(f)
         with open(drug_path, "rb") as f:
@@ -90,6 +90,5 @@ class PPINetwork:
 
 
 if __name__=="__main__":
-    ppi = PPINetwork(ppi_path="../ppi.pickle", drug_path="../drugs.pickle", output_dir="../output")
-    #ppi.compute_distances_single_drug(ppi.drug_list[0])
+    ppi = PPINetwork(ppi_path="../ppi.pickle", drug_path="../drugs.pickle", output_dir="../output", num_process=16)
     ppi.compute_distances_multi_drug_parallel()
