@@ -90,5 +90,5 @@ class PPINetwork:
 
 
 if __name__=="__main__":
-    ppi = PPINetwork(ppi_path="../ppi.pickle", drug_path="../drugs.pickle", output_dir="../output", num_process=16)
+    ppi = PPINetwork(ppi_path="../ppi.pickle", drug_path="../drugs.pickle", output_dir="../output", num_process=8)
     ppi.compute_distances_multi_drug_parallel()
