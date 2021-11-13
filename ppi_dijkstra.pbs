@@ -1,6 +1,6 @@
 
 #!/bin/bash
-#PBS -q bigmemtb
+#PBS -q bigmem
 #PBS -l nodes=1:ppn=28
 #PBS -l walltime=72:00:00
 #PBS -A hpc_michal01
