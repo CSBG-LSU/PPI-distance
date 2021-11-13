@@ -19,9 +19,9 @@ class PPINetwork:
         self.num_process = num_process
         print("total number of drugs: ", len(self.drug_list))
 
-    def compute_distances_multi_drug_parallel(self):
+    def compute_distances_multi_drug_parallel(self, start_indx, end_index):
         with Pool(self.num_process) as p:
-            p.map(self.compute_distances_single_drug, self.drug_list)
+            p.map(self.compute_distances_single_drug, self.drug_list[start_indx:end_index + 1])
 
     def compute_distances_single_drug(self, src_drug):
         """
@@ -90,5 +90,6 @@ class PPINetwork:
 
 
 if __name__=="__main__":
-    ppi = PPINetwork(ppi_path="../ppi.pickle", drug_path="../drugs.pickle", output_dir="../output", num_process=4)
+    start_index, end_index = 70, 96
+    ppi = PPINetwork(ppi_path="../ppi.pickle", drug_path="../drugs.pickle", output_dir="../output", num_process=1)
     ppi.compute_distances_multi_drug_parallel()
