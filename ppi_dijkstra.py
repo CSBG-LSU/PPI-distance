@@ -92,4 +92,4 @@ class PPINetwork:
 if __name__=="__main__":
     start_index, end_index = 70, 96
     ppi = PPINetwork(ppi_path="../ppi.pickle", drug_path="../drugs.pickle", output_dir="../output", num_process=2)
-    ppi.compute_distances_multi_drug_parallel()
+    ppi.compute_distances_multi_drug_parallel(start_index, end_index)
