@@ -10,6 +10,6 @@ source activate myenv
 
 cd /work/derick/combination_project/PPI-distance
 
-log_path="../ppi_dijkstra_log.txt"
+log_path="../ppi_dijkstra_log_0.txt"
 
 python ppi_dijkstra.py > ${log_path} 2>&1
