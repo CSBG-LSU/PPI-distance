@@ -88,9 +88,9 @@ class PPINetwork:
 
         for target in targets:
             # run dijkstra to find the shortest distances of all nodes to target
+            shortest_distances = {}
             min_dist = self.dijkstra(self.ppi, target)
             for dst_drug in self.drug_list:
-                shortest_distances = {}
                 if dst_drug==src_drug:
                     continue
                 dst_targets = self.drug_targets[dst_drug]
@@ -100,10 +100,10 @@ class PPINetwork:
                         path = src_drug + '-' + target + '-' + dst_drug + '-' + dst_target + '-' + neighbor
                         shortest_distances[path] = min_dist[neighbor]
 
-                # save the results of src_drug
-                out_file_path = join(self.output_dir, f"{src_drug}-{target}-{dst_drug}.pickle")
-                with open(out_file_path, "wb") as f:
-                    pickle.dump(shortest_distances, f)
+            # save the results of src_drug
+            out_file_path = join(self.output_dir, f"{src_drug}-{target}.pickle")
+            with open(out_file_path, "wb") as f:
+                pickle.dump(shortest_distances, f)
 
     @staticmethod
     def dijkstra(graph, start):
