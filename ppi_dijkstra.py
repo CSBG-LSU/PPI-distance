@@ -140,16 +140,12 @@ class PPINetwork:
 
 
 if __name__=="__main__":
-    #start_index, end_index = 70, 96
-    #start_index, end_index = 50, 69
-    #start_index, end_index = 20, 49
     start_index, end_index = 0, 96
     ppi = PPINetwork(
         ppi_path="../ppi.pickle", 
         drug_path="../drugs.pickle", 
-        output_dir="../output", 
+        output_dir="../output/", 
         output_db_dir="../output_db/",
         num_process=16
     )
     ppi.compute_distances_multi_drug_parallel(start_index, end_index)
-    #ppi.compute_distances_multi_drug_parallel_db(start_index, end_index)
