@@ -17,11 +17,15 @@ class PPINetworkRandom(PPINetwork):
 
         # compute number of random destinations for each node
         self.nodes = list(self.ppi.keys())
-        num_node_pairs = self.compute_num_node_pairs()
-        self.num_random_per_node = int(num_node_pairs / len(self.nodes))
-        print(f"number of nodes: {len(self.nodes)}")
-        print(f"number of random pairs: {num_node_pairs}")
-        print(f"number of random destination nodes per node: {self.num_random_per_node}")
+        #num_node_pairs = self.compute_num_node_pairs()
+        #self.num_random_per_node = int(num_node_pairs / len(self.nodes))
+
+        # pre-computed using self.compute_num_node_pairs
+        self.num_random_per_node = 4131489
+        
+        #print(f"number of nodes: {len(self.nodes)}")
+        #print(f"number of random pairs: {num_node_pairs}")
+        #print(f"number of random destination nodes per node: {self.num_random_per_node}")
 
     def compute_random_distances_parallel(self):
         with Pool(self.num_process) as p:
