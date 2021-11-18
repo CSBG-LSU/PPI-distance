@@ -36,7 +36,7 @@ class PPINetworkRandom(PPINetwork):
         random_nodes = choices(self.nodes, k=self.num_random_per_node)
         min_dist = self.dijkstra(self.ppi, node)
         result = [min_dist[random_node] for random_node in random_nodes]
-        with open(join(self.random_output_dir), f"{node}.pickle") as f:
+        with open(join(self.random_output_dir, f"{node}.pickle"), "wb") as f:
             pickle.dump(result, f)
 
     def compute_num_node_pairs(self):

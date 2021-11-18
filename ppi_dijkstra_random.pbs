@@ -9,7 +9,7 @@ source activate myenv
 
 cd /work/derick/combination_project/PPI-distance
 
-log_path="../ppi_dijkstra_random_log_2.txt"
+log_path="../ppi_dijkstra_random_log_3.txt"
 
 python ppi_dijkstra_random.py > ${log_path} 2>&1
 
