@@ -4,7 +4,7 @@ from os.path import isfile, join, exists
 import pickle
 from re import split
 from collections import defaultdict
-from random import sample
+from random import choices
 from multiprocessing import Pool
 
 
@@ -23,14 +23,13 @@ class PPINetworkRandom(PPINetwork):
         print(f"number of random pairs: {num_node_pairs}")
         print(f"number of random destination nodes per node: {self.num_random_per_node}")
 
-
     def compute_random_distances_parallel(self):
         with Pool(self.num_process) as p:
             p.map(self.compute_random_distances_single_node, self.nodes)
         
     def compute_random_distances_single_node(self, node):
         """Compute distances from input node to random nodes on the graph"""
-        random_nodes = sample(self.nodes, self.num_random_per_node)
+        random_nodes = choices(self.nodes, k=self.num_random_per_node)
         min_dist = self.dijkstra(self.ppi, node)
         result = [min_dist[random_node] for random_node in random_nodes]
         with open(join(self.random_output_dir), f"{node}.pickle") as f:
